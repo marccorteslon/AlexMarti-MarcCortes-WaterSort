@@ -18,5 +18,19 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="juego.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="score.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="juego.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
