@@ -5,7 +5,7 @@
 int main() {
     int option;
     do {
-        std::cout << "1. Nova partida\n2. Veure puntuacions\n3. Sortir\n";
+        std::cout << "Nueva Partida [1]\nVer Puntuaciones [2]\nSalir [3]\n";
         std::cin >> option;
         if (option == 1) juegaPartida();
         else if (option == 2) showScores();

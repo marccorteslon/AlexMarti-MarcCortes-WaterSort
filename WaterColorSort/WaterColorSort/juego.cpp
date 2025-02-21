@@ -8,7 +8,7 @@
 std::vector<Bottle> ampolles(TOTAL_AMPOLLES);
 int moviments = 0;
 
-// Inicializa las ampolles con líquids aleatoris
+// Inicializa las botel as
 void inicialitzaAmpolles() {
     srand(time(0));
     for (int i = 0; i < TOTAL_AMPOLLES; i++) {
@@ -24,9 +24,9 @@ void inicialitzaAmpolles() {
     ampolles[extra2].contents.push_back(LIQUIDS[rand() % 4]);
 }
 
-// Mostra les ampolles en format contenidor
+// Muestra las botellas en formato contenedor
 void mostraAmpolles() {
-    std::cout << "\n Ampolles:" << std::endl;
+    std::cout << "\n Botellas:" << std::endl;
     for (int j = 0; j < TOTAL_AMPOLLES; j++) {
         std::cout << "Y   Y ";
     }
@@ -52,7 +52,7 @@ void mostraAmpolles() {
     std::cout << std::endl;
 }
 
-// Comprova si un moviment és vàlid
+// Comprueba si un movimiento es valido
 bool isValidMove(int source, int target) {
     if (source < 0 || source >= TOTAL_AMPOLLES || target < 0 || target >= TOTAL_AMPOLLES)
         return false;
@@ -61,31 +61,33 @@ bool isValidMove(int source, int target) {
     return true;
 }
 
-// Comprova si el joc ha acabat
+// Comprueba si el juego ha terminado
 bool checkGameOver() {
-    std::vector<char> uniqueLiquids;
+    // Comprobar si todas las botellas tienen un solo tipo de líquido
     for (Bottle& b : ampolles) {
         if (!b.contents.empty()) {
             char first = b.contents[0];
             for (char liquid : b.contents) {
-                if (liquid != first) return false;
+                if (liquid != first) {
+                    return false;  // Si hay más de un tipo de líquido en la botella, el juego no ha terminado
+                }
             }
-            uniqueLiquids.push_back(first);
         }
     }
-    return uniqueLiquids.size() <= 1 || moviments >= 10;
+    return true;  // Si todas las botellas tienen solo un tipo de líquido, el juego ha terminado
 }
 
-// Funció principal del joc
+
+// Funcion principal del juego
 void juegaPartida() {
     inicialitzaAmpolles();
     while (!checkGameOver()) {
         mostraAmpolles();
         int source, target;
-        std::cout << "(0 per acabar) Selecciona una ampolla per omplir: ";
+        std::cout << "[0 Para terminar] Selecciona una botella para llenar: ";
         std::cin >> target;
         if (target == 0) break;
-        std::cout << "Selecciona una ampolla per buidar: ";
+        std::cout << "Selecciona una botella para llenar: ";
         std::cin >> source;
         if (source == 0) break;
         source--, target--;
@@ -95,8 +97,16 @@ void juegaPartida() {
             moviments++;
         }
         else {
-            std::cout << "Moviment no vàlid!" << std::endl;
+            std::cout << "Movimiento no valido!" << std::endl;
         }
     }
-    std::cout << "Has perdido :(!" << std::endl;
+
+    // Aquí se comprueba si se ha ganado
+    if (checkGameOver()) {
+        std::cout << "¡Has ganado!" << std::endl;
+    }
+    else {
+        std::cout << "Has perdido :(!" << std::endl;
+    }
 }
+

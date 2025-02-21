@@ -5,17 +5,17 @@
 
 using namespace std;
 
-// Guarda la puntuació en un fitxer
+// Guarda la puntuacion en un archivo
 void saveScore(int score) {
     string name;
-    cout << "Introdueix el teu nom: ";
+    cout << "Introduce tu nombre: ";
     cin >> name;
     ofstream file("scores.wcs", ios::app);
     file << name << " " << score << endl;
     file.close();
 }
 
-// Mostra les puntuacions guardades
+// Muestra las puntuaciones guardadas
 void showScores() {
     ifstream file("scores.wcs");
     string name;
