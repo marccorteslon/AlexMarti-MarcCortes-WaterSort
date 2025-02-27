@@ -2,29 +2,32 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <algorithm>
 
 // Definición de las funciones
 
 std::vector<Bottle> ampolles(TOTAL_AMPOLLES);
 int moviments = 0;
 
-// Inicializa las botel as
-void inicialitzaAmpolles() {
-    srand(time(0));
-    for (int i = 0; i < TOTAL_AMPOLLES; i++) {
-        ampolles[i].contents.push_back(LIQUIDS[rand() % 4]);
-        ampolles[i].contents.push_back(LIQUIDS[rand() % 4]);
-    }
-    int extra1 = rand() % TOTAL_AMPOLLES;
-    int extra2;
-    do {
-        extra2 = rand() % TOTAL_AMPOLLES;
-    } while (extra1 == extra2);
-    ampolles[extra1].contents.push_back(LIQUIDS[rand() % 4]);
-    ampolles[extra2].contents.push_back(LIQUIDS[rand() % 4]);
-}
+// Inicializa las botellas
+    void crearBotellas() {
+        std::vector<char> liquidosRepartidos;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < MAXIM_CAPACITAT; j++) {
+                liquidosRepartidos.push_back(LIQUIDS[i]);
+            }
+        }
+        std::random_shuffle(liquidosRepartidos.begin(), liquidosRepartidos.end());
 
-// Muestra las botellas en formato contenedor
+        int index = 0;
+        for (int i = 0; i < TOTAL_AMPOLLES; i++) {
+            for (int j = 0; j < MAXIM_CAPACITAT && index < liquidosRepartidos.size(); j++) {
+                ampolles[i].contents.push_back(liquidosRepartidos[index++]);
+            }
+        }
+    }
+
+// Muestra las botellas en la pantalla
 void mostraAmpolles() {
     std::cout << "\n Botellas:" << std::endl;
     for (int j = 0; j < TOTAL_AMPOLLES; j++) {
@@ -67,6 +70,9 @@ bool checkGameOver() {
     for (Bottle& b : ampolles) {
         if (!b.contents.empty()) {
             char first = b.contents[0];
+            if (b.contents.size() != MAXIM_CAPACITAT) {
+                return false;
+            }
             for (char liquid : b.contents) {
                 if (liquid != first) {
                     return false;  // Si hay más de un tipo de líquido en la botella, el juego no ha terminado
@@ -80,7 +86,7 @@ bool checkGameOver() {
 
 // Funcion principal del juego
 void juegaPartida() {
-    inicialitzaAmpolles();
+    crearBotellas();
     while (!checkGameOver()) {
         mostraAmpolles();
         int source, target;
