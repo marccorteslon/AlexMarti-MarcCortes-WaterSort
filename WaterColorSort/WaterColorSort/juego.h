@@ -11,10 +11,13 @@ struct Bottle {
     std::vector<char> contents;
 };
 
-void inicialitzaAmpollas();
-void mostraAmpolles();
+extern std::vector<Bottle> ampolles;
+
+void crearBotellas();
+void mostrarBotellas();
 bool isValidMove(int source, int target);
 bool checkGameOver();
 void juegaPartida();
+int calcularPuntuación();
 
 #endif

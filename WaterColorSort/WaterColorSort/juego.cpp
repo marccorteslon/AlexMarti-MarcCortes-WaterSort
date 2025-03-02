@@ -1,13 +1,17 @@
-#include "Juego.h"
+#include "juego.h"
+#include "score.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+#include <string>
 
 // Definición de las funciones
 
 std::vector<Bottle> ampolles(TOTAL_AMPOLLES);
 int moviments = 0;
+
+const int MOVIMIENTOS_MAXIMOS = 10;
 
 // Inicializa las botellas
     void crearBotellas() {
@@ -28,7 +32,7 @@ int moviments = 0;
     }
 
 // Muestra las botellas en la pantalla
-void mostraAmpolles() {
+void mostrarBotellas() {
     std::cout << "\n Botellas:" << std::endl;
     for (int j = 0; j < TOTAL_AMPOLLES; j++) {
         std::cout << "Y   Y ";
@@ -87,8 +91,8 @@ bool checkGameOver() {
 // Funcion principal del juego
 void juegaPartida() {
     crearBotellas();
-    while (!checkGameOver()) {
-        mostraAmpolles();
+    while (!checkGameOver() && moviments < MOVIMIENTOS_MAXIMOS) {
+        mostrarBotellas();
         int source, target;
         std::cout << "[0 Para terminar] Selecciona una botella para llenar: ";
         std::cin >> target;
@@ -114,5 +118,15 @@ void juegaPartida() {
     else {
         std::cout << "Has perdido :(!" << std::endl;
     }
+
+    std::string name;
+
+    std::cout << "Partida terminada, ponle un nombre a tu puntuacion: ";
+    std::cin.ignore();
+    std::getline(std::cin, name);
+
+    int score = calcularPuntuación();
+    saveScore(score, name);
+
 }
 

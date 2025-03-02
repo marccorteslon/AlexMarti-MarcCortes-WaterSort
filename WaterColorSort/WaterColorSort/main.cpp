@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Juego.h"
-#include "Score.h"
+#include "juego.h"
+#include "score.h"
 
 int main() {
     int option;
